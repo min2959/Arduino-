@@ -1,0 +1,80 @@
+#define ENA 10
+#define EN1 9
+#define EN2 8
+#define EN3 7
+#define EN4 6
+#define ENB 5
+int Motor_speed=100;
+
+void setup() {
+pinMode(A0, INPUT);
+pinMode(A1, INPUT);
+pinMode(A2, INPUT);
+pinMode(A3, INPUT);
+pinMode(ENA, OUTPUT);
+pinMode(EN1, OUTPUT);
+pinMode(EN2, OUTPUT);
+pinMode(EN3, OUTPUT);
+pinMode(EN4, OUTPUT);
+pinMode(ENB, OUTPUT);
+Serial.begin(9600);
+}
+
+void loop() {
+  int a,b,c,d;  
+  a=analogRead(A0);
+  b=analogRead(A1);
+  c=analogRead(A2);
+  d=analogRead(A3);
+
+   Serial.print("value: ");
+   Serial.print(a);
+   Serial.print(" ");
+   Serial.print(b);
+   Serial.print(" ");
+   Serial.print(c);
+   Serial.print(" ");
+   Serial.println(d);
+   delay(1000);
+
+  if(a<=70 && b>70 && c>70 && d<=70){
+   digitalWrite(EN1, HIGH);
+   digitalWrite(EN2, LOW);
+   analogWrite(ENA, Motor_speed);
+   digitalWrite(EN3, HIGH);
+   digitalWrite(EN4, LOW);
+   analogWrite(ENB, Motor_speed);
+    } //직진
+  else if(a<=70 && b<=70 && c<=70 && d>70){
+   digitalWrite(EN1, HIGH);
+   digitalWrite(EN2, LOW);
+   analogWrite(ENA, Motor_speed);
+   digitalWrite(EN3, HIGH);
+   digitalWrite(EN4, HIGH);
+   analogWrite(ENB, Motor_speed);
+    } //직각우회전
+  else if(a>70 && b>70 && c>70 && d<=70){
+   digitalWrite(EN1, HIGH);
+   digitalWrite(EN2, HIGH);
+   analogWrite(ENA, Motor_speed);
+   digitalWrite(EN3, HIGH);
+   digitalWrite(EN4, LOW);
+   analogWrite(ENB, Motor_speed);
+    } //직각좌회전
+  else if(a<=70 && b<=70 && c>70 && d>70){
+   digitalWrite(EN1, HIGH);
+   digitalWrite(EN2, LOW);
+   analogWrite(ENA, 80); //스피드 빠르게
+   digitalWrite(EN3, HIGH);
+   digitalWrite(EN4, LOW);
+   analogWrite(ENB, 50); //스피드 느리게
+   } //우회전
+  else if(a>70 && b>70 && c<=70 && d<=70){
+   digitalWrite(EN1, HIGH);
+   digitalWrite(EN2, LOW);
+   analogWrite(ENA, 50); //스피드 느리게
+   digitalWrite(EN3, HIGH);
+   digitalWrite(EN4, LOW);
+   analogWrite(ENB, 80); //스피드 빠르게
+   } //좌회전
+}
